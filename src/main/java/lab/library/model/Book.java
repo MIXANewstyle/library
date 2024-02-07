@@ -1,7 +1,8 @@
-package lab5.library.model;
+package lab.library.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+
 @Entity
 @Table(name = "books")
 public class Book {

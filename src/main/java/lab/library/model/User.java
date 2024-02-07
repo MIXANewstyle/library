@@ -1,7 +1,4 @@
-package lab5.library.model;
-
-import lab5.library.model.Book;
-import lab5.library.model.Role;
+package lab.library.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -24,7 +21,7 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    private Role role ;
+    private Role role;
 
     @OneToMany
     @JoinColumn(name = "owner_id")
