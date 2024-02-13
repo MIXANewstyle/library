@@ -2,8 +2,11 @@ package lab.library.service;
 
 import lab.library.model.Role;
 
-public interface RoleService {
-    Role getRoleByName(String roleName);
+import java.util.Optional;
 
-    Role getRoleById(int roleId);
+public interface RoleService {
+    Optional<Role> getRoleByName(String roleName);
+
+    Optional<Role> getRoleById(int roleId);
+
 }

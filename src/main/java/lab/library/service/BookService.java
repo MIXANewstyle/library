@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface BookService {
-    Book create(String title, String author, LocalDate writingDate, int pages, boolean bookIsFree, int userId);
+    Book createBook(String title, String author, LocalDate writingDate, int pages, boolean bookIsFree, int userId);
 
     Book getBookById(int id);
 
@@ -17,4 +17,5 @@ public interface BookService {
     Book deleteBookById(int id);
 
     Book takeBookById(int bookId, int userId);
+    //edit title
 }

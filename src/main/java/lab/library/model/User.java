@@ -27,4 +27,6 @@ public class User {
     @JoinColumn(name = "owner_id")
     private List<Book> books = new ArrayList<>();
 
+    //мгеттеры и сеттеры, конструкторы, equals and хешкод, to string.
+    //Для всех
 }
