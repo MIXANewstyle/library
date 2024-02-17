@@ -4,18 +4,16 @@ import lab.library.model.Book;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface BookService {
-    Book createBook(String title, String author, LocalDate writingDate, int pages, boolean bookIsFree, int userId);
+    Optional<Book> createBook(Book book);
 
-    Book getBookById(int id);
+    Optional<Book> getBookById(int id);
 
-    Book getBookByTitle(String id);
+    Optional<Book> getBookByTitle(String id);
 
     List<Book> getBooksByAuthor(String author);
-
-    Book deleteBookById(int id);
-
-    Book takeBookById(int bookId, int userId);
-    //edit title
+    Optional<Book> takeBookById(int bookId, int userId);
+    Optional<Book> putBookById(int bookId, int userId);
 }

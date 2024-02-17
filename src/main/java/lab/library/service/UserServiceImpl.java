@@ -1,11 +1,14 @@
 package lab.library.service;
 
+import lab.library.model.Book;
 import lab.library.model.Role;
 import lab.library.model.User;
 import lab.library.repository.UserRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-
+@Service
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
@@ -15,42 +18,72 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Optional<User> createUser(String name, String surname, String login, String password) {
-        Optional<User> userOptional = userRepository.getUserByLogin(login);
+    public Optional<User> createUser(User user) {
+        Optional<User> userOptional = userRepository.findUserByLogin(user.getLogin());
         if (userOptional.isPresent()){
             return Optional.empty();
         }
-        User newUser = new User(name, surname, login, password);
-        return null;
+        return Optional.of(userRepository.save(user));
     }
 
     @Override
-    public User deleteUserById(int id) {
-        return null;
+    public Optional<User> deleteUserById(int id) {
+        Optional<User> foundUser = userRepository.findById(id);
+        if (foundUser.isEmpty()){
+            return Optional.empty();
+        }
+        userRepository.deleteById(id);
+        return foundUser;
     }
 
     @Override
-    public User editUserById(int id, String name, String surname, String login, String password) {
-        return null;
+    @Transactional
+    public Optional<User> editUserById(User user) {
+        Optional<User> foundUser = userRepository.findById(user.getId());
+        if (foundUser.isEmpty()){
+            return Optional.empty();
+        }
+        User editedUser = foundUser.get();
+        editedUser.setName(user.getName());
+        editedUser.setSurname(user.getSurname());
+        editedUser.setLogin(user.getLogin());
+        editedUser.setPassword(user.getPassword());
+        return Optional.of(editedUser);
     }
 
     @Override
-    public Role getUserRoleById(int id) {
-        return null;
+    public Optional<Role> getUserRoleById(int id) {
+        Optional<User> foundUser = userRepository.findById(id);
+        if (foundUser.isEmpty()){
+            return Optional.empty();
+        }
+        return Optional.of(foundUser.get().getRole());
+    }
+    @Override
+    public Optional<User> findUserById(int id) {
+        return userRepository.findById(id);
     }
 
     @Override
-    public User findUserById(int id) {
-        return null;
+    public Optional<User> findUserByLogin(String login) {
+        return userRepository.findUserByLogin(login);
     }
 
     @Override
-    public User findUserByLogin(String login) {
-        return null;
+    @Transactional
+    public Optional<User> banUserById(int id) {
+        Optional<User> foundUser = userRepository.findById(id);
+        if (foundUser.isEmpty()){
+            return Optional.empty();
+        }
+        foundUser.get().setBanned(true);
+        return foundUser;
     }
 
     @Override
-    public User banUserById(int id) {
-        return null;
+    @Transactional
+    public void addBook(Book book, int userId) {
+        Optional<User> user = userRepository.findById(userId);
+        user.ifPresent(value -> value.getBooks().add(book));
     }
 }

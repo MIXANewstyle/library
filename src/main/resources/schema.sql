@@ -22,6 +22,5 @@ CREATE TABLE IF NOT EXISTS books
     description TEXT NOT NULL,
     writing_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     pages INT NOT NULL,
-    book_is_free BOOLEAN NOT NULL,
     owner_id INT REFERENCES users (id)
 );
