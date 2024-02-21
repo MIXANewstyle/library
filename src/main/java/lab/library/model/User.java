@@ -18,6 +18,7 @@ public class User {
     private String login;
 
     private String password;
+    @Column(name = "is_banned")
     private boolean isBanned;
 
     @ManyToOne
@@ -37,6 +38,7 @@ public class User {
         this.role = role;
         this.books = books;
     }
+
     public User() {
     }
 
@@ -116,6 +118,7 @@ public class User {
     public int hashCode() {
         return Objects.hash(getId(), getLogin());
     }
+
     @Override
     public String toString() {
         return "User{" +

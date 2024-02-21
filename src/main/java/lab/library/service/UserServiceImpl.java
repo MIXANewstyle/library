@@ -8,19 +8,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-@Service
-public class UserServiceImpl implements UserService{
 
+@Service
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository){
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
     public Optional<User> createUser(User user) {
         Optional<User> userOptional = userRepository.findUserByLogin(user.getLogin());
-        if (userOptional.isPresent()){
+        if (userOptional.isPresent()) {
             return Optional.empty();
         }
         return Optional.of(userRepository.save(user));
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public Optional<User> deleteUserById(int id) {
         Optional<User> foundUser = userRepository.findById(id);
-        if (foundUser.isEmpty()){
+        if (foundUser.isEmpty()) {
             return Optional.empty();
         }
         userRepository.deleteById(id);
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public Optional<User> editUserById(User user) {
         Optional<User> foundUser = userRepository.findById(user.getId());
-        if (foundUser.isEmpty()){
+        if (foundUser.isEmpty()) {
             return Optional.empty();
         }
         User editedUser = foundUser.get();
@@ -54,11 +54,12 @@ public class UserServiceImpl implements UserService{
     @Override
     public Optional<Role> getUserRoleById(int id) {
         Optional<User> foundUser = userRepository.findById(id);
-        if (foundUser.isEmpty()){
+        if (foundUser.isEmpty()) {
             return Optional.empty();
         }
         return Optional.of(foundUser.get().getRole());
     }
+
     @Override
     public Optional<User> findUserById(int id) {
         return userRepository.findById(id);
@@ -73,7 +74,7 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public Optional<User> banUserById(int id) {
         Optional<User> foundUser = userRepository.findById(id);
-        if (foundUser.isEmpty()){
+        if (foundUser.isEmpty()) {
             return Optional.empty();
         }
         foundUser.get().setBanned(true);

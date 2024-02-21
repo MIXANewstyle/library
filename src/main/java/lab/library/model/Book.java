@@ -17,9 +17,10 @@ public class Book {
     private int pages;
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    private User user;
-    public Book(){
 
+    private User user;
+
+    public Book() {
     }
 
     public Book(String title, String author, LocalDate writingDate, int pages, User user) {
@@ -30,12 +31,29 @@ public class Book {
         this.user = user;
     }
 
-    public int getId (){return id;}
-    public String getTitle(){return title;}
-    public String getAuthor(){return author;}
-    public LocalDate getWritingDate(){return writingDate;}
-    public int getPages(){return pages;};
-    public User getUser(){return user;}
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public LocalDate getWritingDate() {
+        return writingDate;
+    }
+
+    public int getPages() {
+        return pages;
+    }
+
+    public User getUser() {
+        return user;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -56,6 +74,7 @@ public class Book {
     public void setPages(int pages) {
         this.pages = pages;
     }
+
     public void setUser(User user) {
         this.user = user;
     }

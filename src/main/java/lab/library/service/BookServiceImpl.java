@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BookServiceImpl implements BookService{
+public class BookServiceImpl implements BookService {
     private final UserService userService;
     private final BookRepository bookRepository;
 
-    public BookServiceImpl(UserService userService, BookRepository bookRepository){
+    public BookServiceImpl(UserService userService, BookRepository bookRepository) {
         this.userService = userService;
         this.bookRepository = bookRepository;
     }
@@ -27,7 +27,7 @@ public class BookServiceImpl implements BookService{
     @Override
     public Optional<Book> getBookById(int id) {
         Optional<Book> foundBook = bookRepository.findById(id);
-        if (foundBook.isEmpty()){
+        if (foundBook.isEmpty()) {
             return Optional.empty();
         }
         return foundBook;
@@ -36,7 +36,7 @@ public class BookServiceImpl implements BookService{
     @Override
     public Optional<Book> getBookByTitle(String title) {
         Optional<Book> foundBook = bookRepository.findBookByTitle(title);
-        if (foundBook.isEmpty()){
+        if (foundBook.isEmpty()) {
             return Optional.empty();
         }
         return foundBook;
@@ -46,12 +46,18 @@ public class BookServiceImpl implements BookService{
     public List<Book> getBooksByAuthor(String author) {
         return bookRepository.findBooksByAuthor(author);
     }
+
+    @Override
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll();
+    }
+
     @Override
     @Transactional
-    public Optional<Book> putBookById(int bookId, int userId){
+    public Optional<Book> putBookById(int bookId, int userId) {
         Optional<Book> foundBook = bookRepository.findById(bookId);
         Optional<User> foundUser = userService.findUserById(userId);
-        if (foundBook.isEmpty() || foundUser.isEmpty() || !foundUser.get().getBooks().contains(foundBook.get())){
+        if (foundBook.isEmpty() || foundUser.isEmpty() || !foundUser.get().getBooks().contains(foundBook.get())) {
             return Optional.empty();
         }
         Book currentBook = foundBook.get();
@@ -64,9 +70,9 @@ public class BookServiceImpl implements BookService{
     @Override
     @Transactional
     public Optional<Book> takeBookById(int bookId, int userId) {
-        Optional<Book> optionalBook= bookRepository.findById(bookId);
+        Optional<Book> optionalBook = bookRepository.findById(bookId);
         Optional<User> optionalUser = userService.findUserById(userId);
-        if (optionalBook.isEmpty() || optionalUser.isEmpty()){
+        if (optionalBook.isEmpty() || optionalUser.isEmpty()) {
             return Optional.empty();
         }
         Book book = optionalBook.get();

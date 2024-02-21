@@ -11,10 +11,10 @@ public class Role {
     private int id;
     private String name;
 
-
     public Role(String name) {
         this.name = name;
     }
+
     public Role() {
 
     }
@@ -26,6 +26,7 @@ public class Role {
     public String getName() {
         return name;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
