@@ -25,3 +25,23 @@ CREATE TABLE IF NOT EXISTS books
     pages INT NOT NULL,
     owner_id INT REFERENCES users (id)
 );
+
+CREATE TABLE IF NOT EXISTS files
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL,
+    path VARCHAR NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS news
+(
+    id          SERIAL PRIMARY KEY,
+    title       VARCHAR NOT NULL,
+    short_description TEXT NOT NULL,
+    full_description TEXT NOT NULL,
+    created TIMESTAMP NOT NULL DEFAULT now(),
+    file_id INT REFERENCES files(id)
+);
+
+
+

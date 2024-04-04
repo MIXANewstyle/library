@@ -19,14 +19,14 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Название</th>
-        <th scope="col">Дата создания</th>
+        <th scope="col">Автор</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="book: ${books}">
         <td th:text="${book.id}"/>
-        <td>th:text="${book.title}")}"</td>
-        <td th:text="${#temporals.format(book.writingDate, 'dd.MM.yyyy')}"/>
+        <td th:text="${book.title}"/>
+        <td th:text="${book.author}"/>
       </tr>
       </tbody>
     </table>

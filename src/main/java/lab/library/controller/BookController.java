@@ -1,6 +1,7 @@
 package lab.library.controller;
 
 import lab.library.service.BookService;
+import lab.library.service.NewsService;
 import lab.library.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +17,6 @@ public class BookController {
     public BookController(BookService bookService, UserService userService) {
         this.bookService = bookService;
         this.userService = userService;
-    }
-
-    @GetMapping
-    public String getHomePage() {
-        return "homePage/homePage";
     }
 
     @GetMapping("/books")

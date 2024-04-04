@@ -12,6 +12,8 @@ public class Book {
     private int id;
     private String title;
     private String author;
+
+    private String description;
     @Column(name = "writing_date")
     private LocalDate writingDate;
     private int pages;
@@ -23,9 +25,10 @@ public class Book {
     public Book() {
     }
 
-    public Book(String title, String author, LocalDate writingDate, int pages, User user) {
+    public Book(String title, String author, String description, LocalDate writingDate, int pages, User user) {
         this.title = title;
         this.author = author;
+        this.description = description;
         this.writingDate = writingDate;
         this.pages = pages;
         this.user = user;
@@ -41,6 +44,10 @@ public class Book {
 
     public String getAuthor() {
         return author;
+    }
+
+    public String getDescription(){
+        return  description;
     }
 
     public LocalDate getWritingDate() {
@@ -65,6 +72,10 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setWritingDate(LocalDate writingDate) {
@@ -98,6 +109,7 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
+                ", description='" + description + '\'' +
                 ", writingDate=" + writingDate +
                 ", pages=" + pages +
                 ", user=" + user +
