@@ -20,7 +20,7 @@ public class News {
     private String fullDescription;
     private LocalDateTime created = LocalDateTime.now();
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "file_id")
     private File file;
 

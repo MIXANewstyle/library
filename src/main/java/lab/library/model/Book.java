@@ -12,15 +12,17 @@ public class Book {
     private int id;
     private String title;
     private String author;
-
     private String description;
     @Column(name = "writing_date")
     private LocalDate writingDate;
     private int pages;
     @ManyToOne
     @JoinColumn(name = "owner_id")
-
     private User user;
+
+    @OneToOne
+    @JoinColumn(name = "file_id")
+    private File file;
 
     public Book() {
     }
@@ -90,6 +92,14 @@ public class Book {
         this.user = user;
     }
 
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -113,6 +123,7 @@ public class Book {
                 ", writingDate=" + writingDate +
                 ", pages=" + pages +
                 ", user=" + user +
+                ", file=" + file +
                 '}';
     }
 }

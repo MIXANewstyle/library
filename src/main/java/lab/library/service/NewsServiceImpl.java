@@ -59,6 +59,7 @@ public class NewsServiceImpl implements NewsService{
             return Optional.empty();
         }
         newsRepository.deleteById(id);
+        fileService.deleteById(foundNews.get().getFile().getId());
         return foundNews;
     }
 
@@ -68,16 +69,16 @@ public class NewsServiceImpl implements NewsService{
         boolean isNewFileEmpty = fileDto.getContent().length == 0;
         if (isNewFileEmpty) {
             Optional<File> optFile = fileRepository.findById(newsDto.getFileId());
-            newsRepository.save(new News(id, newsDto.getTitle(), newsDto.getShortDescription(),
-                    newsDto.getFullDescription(), newsDto.getCreated(), optFile.get()));
+            return Optional.of(newsRepository.save(new News(id, newsDto.getTitle(), newsDto.getShortDescription(),
+                    newsDto.getFullDescription(), LocalDateTime.now(), optFile.get())));
         }
         newsDto.setCreated(LocalDateTime.now());
-//        int oldFileId = newsDto.getFileId();
+        int oldFileId = newsDto.getFileId();
         File file = fileService.save(fileDto);
         News updatedNews = new News(id, newsDto.getTitle(), newsDto.getShortDescription(),
-                newsDto.getFullDescription(), newsDto.getCreated(), file);
+                newsDto.getFullDescription(), LocalDateTime.now(), file);
         News save = newsRepository.save(updatedNews);
-//        fileService.deleteById(oldFileId);
+        fileService.deleteById(oldFileId);
         return Optional.of(save);
     }
 

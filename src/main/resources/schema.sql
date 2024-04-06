@@ -1,3 +1,10 @@
+CREATE TABLE IF NOT EXISTS files
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL,
+    path VARCHAR NOT NULL UNIQUE
+);
+
 CREATE TABLE IF NOT EXISTS roles
 (
     id          SERIAL PRIMARY KEY,
@@ -24,13 +31,7 @@ CREATE TABLE IF NOT EXISTS books
     writing_date DATE NOT NULL,
     pages INT NOT NULL,
     owner_id INT REFERENCES users (id)
-);
-
-CREATE TABLE IF NOT EXISTS files
-(
-    id   SERIAL PRIMARY KEY,
-    name VARCHAR NOT NULL,
-    path VARCHAR NOT NULL UNIQUE
+    file_id INT REFERENCES files(id)
 );
 
 CREATE TABLE IF NOT EXISTS news

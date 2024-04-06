@@ -7,23 +7,22 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
-<header th:insert="blocks/header :: header"></header>
-<h1>Список всех новостей:</h1>
+<header th:insert="moderator/blocks/ModeratorHeader :: ModeratorHeader"></header>
 <div class="container">
   <div class="row">
     <table class="table">
       <thead>
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Название</th>
         <th scope="col">Краткое описание</th>
+        <th scope="col">Дата создания</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="news: ${listNews}">
-        <td th:text="${news.id}"/>
-        <td> <a th:text="${news.title}" th:href="@{/news/{newsId}(newsId=${news.id})}"></a></td>
+        <td> <a th:text="${news.title}" th:href="@{/moderator/{newsId}(newsId=${news.id})}"></a></td>
         <td th:text="${news.shortDescription}"/>
+        <td th:text="${#temporals.format(news.created, 'dd.MM.yyyy HH:mm')}"/>
       </tr>
       </tbody>
     </table>

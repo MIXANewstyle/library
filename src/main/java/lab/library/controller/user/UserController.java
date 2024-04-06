@@ -1,4 +1,4 @@
-package lab.library.controller;
+package lab.library.controller.user;
 
 import lab.library.service.BookService;
 import lab.library.service.NewsService;
@@ -9,19 +9,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/library")
-public class BookController {
-    private final BookService bookService;
-    private final UserService userService;
+@RequestMapping("/user")
+public class UserController {
+    private final NewsService newsService;
 
-    public BookController(BookService bookService, UserService userService) {
+    private final BookService bookService;
+
+    public UserController(NewsService newsService, BookService bookService) {
+        this.newsService = newsService;
         this.bookService = bookService;
-        this.userService = userService;
+    }
+
+    @GetMapping
+    public String getHomePage(Model model) {
+        model.addAttribute("listNews", newsService.getAllNews());
+        return "user/homePage/homePage";
     }
 
     @GetMapping("/books")
     public String getBooks(Model model){
         model.addAttribute("books", bookService.getAllBooks());
-        return "book/books";
+        return "user/book/books";
     }
+
+
 }

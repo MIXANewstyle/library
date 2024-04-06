@@ -1,4 +1,4 @@
-package lab.library.controller;
+package lab.library.controller.moderator;
 
 import lab.library.model.News;
 import lab.library.model.dto.FileDto;
@@ -13,27 +13,27 @@ import java.io.IOException;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/news")
-public class NewsController {
+@RequestMapping("/moderator")
+public class ModeratorController {
     private final NewsService newsService;
 
-    public NewsController(NewsService newsService) {
+    public ModeratorController(NewsService newsService) {
         this.newsService = newsService;
     }
 
     @GetMapping("/create")
     public String getCreatePage() {
-        return "news/create";
+        return "moderator/news/create";
     }
 
     @PostMapping("/create")
     public String addNews(@ModelAttribute News news, @RequestParam MultipartFile multipartFile, Model model){
         try {
             newsService.createNews(news, new FileDto(multipartFile.getOriginalFilename(), multipartFile.getBytes()));
-            return "redirect:/news";
+            return "redirect:/moderator";
         } catch (Exception exception) {
             model.addAttribute("message", exception.getMessage());
-            return "errors/404";
+            return "moderator/errors/404";
         }
     }
 
@@ -42,16 +42,16 @@ public class NewsController {
         Optional<NewsDto> foundNews = newsService.getNewsById(id);
         if (foundNews.isEmpty()){
             model.addAttribute("message", "Новость не найдена");
-            return "errors/404";
+            return "moderator/errors/404";
         }
         model.addAttribute("news", foundNews.get());
-        return "news/one";
+        return "moderator/news/one";
     }
 
     @GetMapping
     public String getAllNews(Model model) {
         model.addAttribute("listNews", newsService.getAllNews());
-        return "news/news";
+        return "moderator/news/news";
     }
 
     @GetMapping("/delete/{id}")
@@ -59,9 +59,9 @@ public class NewsController {
         Optional<News> foundNews = newsService.deleteNewsById(id);
         if (foundNews.isEmpty()){
             model.addAttribute("message", "Новость не найдена");
-            return "errors/404";
+            return "moderator/errors/404";
         }
-        return "redirect:/news";
+        return "redirect:/moderator";
     }
 
     @PostMapping("/update")
@@ -71,12 +71,12 @@ public class NewsController {
                     new FileDto(multipartFile.getOriginalFilename(), multipartFile.getBytes()));
             if (foundNews.isEmpty()) {
                 model.addAttribute("message", "Новость не найдена");
-                return "errors/404";
+                return "moderator/errors/404";
             }
         } catch (IOException e) {
             model.addAttribute("message", e.getMessage());
-            return "errors/404";
+            return "moderator/errors/404";
         }
-        return "redirect:/news";
+        return "redirect:/moderator";
     }
 }
