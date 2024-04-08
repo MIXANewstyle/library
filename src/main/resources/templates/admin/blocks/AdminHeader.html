@@ -5,11 +5,11 @@
 <div th:fragment="AdminHeader">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="/static">Лермонтовка</a>
+      <a class="navbar-brand" href="/admin">Лермонтовка</a>
       <div class="collapse navbar-collapse">
         <div class="navbar-nav me-auto">
-          <a class="nav-item nav-link active" th:href="@{/static}">Новости</a>
-          <a class="nav-item nav-link active" th:href="@{/library/books}">Библиотека</a>
+          <a class="nav-item nav-link active" th:href="@{/admin}">Библиотека</a>
+          <a class="nav-item nav-link active" th:href="@{/admin/create}">Добавить книгу</a>
         </div>
       </div>
     </div>

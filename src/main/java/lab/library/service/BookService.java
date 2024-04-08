@@ -1,22 +1,33 @@
 package lab.library.service;
+
 import lab.library.model.Book;
+import lab.library.model.dto.BookDto;
+import lab.library.model.dto.FileDto;
+
 import java.util.List;
 import java.util.Optional;
 
 public interface BookService {
-    Optional<Book> createBook(Book book);
 
-    Optional<Book> getBookById(int id);
+    Book createBook(Book book, FileDto fileDto);
 
-    Optional<Book> getBookByTitle(String id);
+    Optional<BookDto> getBookById(Integer id);
 
-    List<Book> getBooksByAuthor(String author);
+    List<BookDto> getAllBooks();
 
-    List<Book> getAllBooks();
+    Optional<Book> deleteBookById(Integer id);
 
-    Optional<Book> takeBookById(int bookId, int userId);
+    Optional<Book> updateBookById(BookDto bookDto, Integer id, FileDto fileDto);
 
-    Optional<Book> putBookById(int bookId, int userId);
+    Optional<BookDto> getBookById(int id);
+
+    Optional<BookDto> getBookByTitle(String id);
+
+    List<BookDto> getBooksByAuthor(String author);
+
+    Optional<BookDto> takeBookById(int bookId, int userId);
+
+    Optional<BookDto> putBookById(int bookId, int userId);
 
 
 }

@@ -1,6 +1,7 @@
 package lab.library.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -11,13 +12,17 @@ public class News {
     @Id
     private int id;
 
+    @NotEmpty(message = "Добавьте название новости")
     private String title;
 
+    @NotEmpty(message = "Добавьте короткое описание новости")
     @Column(name = "short_description")
     private String shortDescription;
 
+    @NotEmpty(message = "Добавьте полное новости")
     @Column (name = "full_description")
     private String fullDescription;
+
     private LocalDateTime created = LocalDateTime.now();
 
     @OneToOne

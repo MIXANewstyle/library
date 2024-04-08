@@ -7,9 +7,9 @@
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
-<header th:insert="moderator/blocks/ModeratorHeader :: ModeratorHeader"></header>
+<header th:insert="admin/blocks/AdminHeader :: AdminHeader"></header>
 <div class="container">
-    <form class="mt-3" th:action="@{/moderator/update}" method="post" th:object="${news}"
+    <form class="mt-3" th:action="@{/admin/update}" method="post" th:object="${book}"
           enctype="multipart/form-data">
         <input type="hidden" name="id" th:field="*{id}">
         <input type="hidden" name="fileId" th:field="*{fileId}">
@@ -25,31 +25,37 @@
             <div class="col-9">
                 <div class="mb-3">
                     <label for="title" class="form-label"><b>Название</b></label>
-                    <input type="text" class="form-control" id="title" name="title" th:field="*{title}" required>
+                    <input type="text" class="form-control" id="title" name="title" th:field="*{title}">
                 </div>
             </div>
         </div>
         <div class="mb-3">
-            <label for="shortDescription" class="form-label"><b>Краткое описание</b></label>
-            <textarea class="form-control" id="shortDescription" name="shortDescription"
-                      th:field="*{shortDescription}" required
+            <label for="author" class="form-label"><b>Автор</b></label>
+            <input type="text" class="form-control" id="author" name="author" th:field="*{author}">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label"><b>Описание</b></label>
+            <textarea class="form-control" id="description" name="description"
+                      rows="25" th:field="*{description}"
             ></textarea>
         </div>
         <div class="mb-3">
-            <label for="fullDescription" class="form-label"><b>Полное описание</b></label>
-            <textarea class="form-control" id="fullDescription" name="fullDescription"
-                      th:field="*{fullDescription}"
-                      rows="25" required
-            ></textarea>
+            <label for="writingDate">Дата написания книги</label>
+            <input type="date" th:field="${book.writingDate}" id="writingDate" name="writingDate"
+                   placeholder="Дата написания книги"/>
+        </div>
+        <div class="mb-3">
+            <label for="pages" class="form-label"><b>Количество страниц</b></label>
+            <input type="number" th:field="${book.pages}" id="pages" name="pages" placeholder="Количество страниц"/>
         </div>
         <div class="mb-3 row">
             <div class="col-6"></div>
             <div class="col-6">
                 <div class="row">
-                    <div class="col-4"><a class="btn btn-light w-100" th:href="@{/moderator}">Отмена</a>
+                    <div class="col-4"><a class="btn btn-light w-100" th:href="@{/admin}">Отмена</a>
                     </div>
                     <div class="col-4"><a class="btn btn-danger w-100"
-                                          th:href="@{/moderator/delete/{id}(id=${news.id})}">Удалить</a>
+                                          th:href="@{/admin/delete/{id}(id=${book.id})}">Удалить</a>
                     </div>
                     <div class="col-4">
                         <button class="btn btn-success w-100" type="submit">Обновить</button>

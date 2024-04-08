@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Optional;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/moderator")
@@ -27,7 +28,7 @@ public class ModeratorController {
     }
 
     @PostMapping("/create")
-    public String addNews(@ModelAttribute News news, @RequestParam MultipartFile multipartFile, Model model){
+    public String addNews(@Valid @ModelAttribute News news, @RequestParam MultipartFile multipartFile, Model model) {
         try {
             newsService.createNews(news, new FileDto(multipartFile.getOriginalFilename(), multipartFile.getBytes()));
             return "redirect:/moderator";
@@ -38,9 +39,9 @@ public class ModeratorController {
     }
 
     @GetMapping("/{id}")
-    public String getNewsById(Model model, @PathVariable int id){
+    public String getNewsById(Model model, @PathVariable int id) {
         Optional<NewsDto> foundNews = newsService.getNewsById(id);
-        if (foundNews.isEmpty()){
+        if (foundNews.isEmpty()) {
             model.addAttribute("message", "Новость не найдена");
             return "moderator/errors/404";
         }
@@ -55,9 +56,9 @@ public class ModeratorController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteNewsById(Model model, @PathVariable int id){
+    public String deleteNewsById(Model model, @PathVariable int id) {
         Optional<News> foundNews = newsService.deleteNewsById(id);
-        if (foundNews.isEmpty()){
+        if (foundNews.isEmpty()) {
             model.addAttribute("message", "Новость не найдена");
             return "moderator/errors/404";
         }
@@ -65,7 +66,7 @@ public class ModeratorController {
     }
 
     @PostMapping("/update")
-    public String updateById(@ModelAttribute NewsDto news, Model model, @RequestParam MultipartFile multipartFile){
+    public String updateById(@Valid @ModelAttribute NewsDto news, Model model, @RequestParam MultipartFile multipartFile) {
         try {
             Optional<News> foundNews = newsService.updateNewsById(news, news.getId(),
                     new FileDto(multipartFile.getOriginalFilename(), multipartFile.getBytes()));

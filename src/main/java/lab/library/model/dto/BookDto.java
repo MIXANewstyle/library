@@ -1,14 +1,35 @@
 package lab.library.model.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class BookDto {
     private int id;
+
+    @NotEmpty(message = "Добавьте название книги")
     private String title;
+
+    @NotEmpty(message = "Добавьте автора книги")
     private String author;
+
+    @NotEmpty(message = "Добавьте описание книги")
     private String description;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Добавьте дату написания книги")
+    @Column(name = "writing_date")
     private LocalDate writingDate;
+
+    @Min(value = 1, message = "Минимальное количество страниц 1")
     private int pages;
     private Integer userId;
     private Integer fileId;

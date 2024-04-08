@@ -1,3 +1,9 @@
+drop table if exists books;
+drop table if exists users;
+drop table if exists roles;
+drop table if exists news;
+drop table if exists files;
+
 CREATE TABLE IF NOT EXISTS files
 (
     id   SERIAL PRIMARY KEY,
@@ -30,7 +36,7 @@ CREATE TABLE IF NOT EXISTS books
     description TEXT NOT NULL,
     writing_date DATE NOT NULL,
     pages INT NOT NULL,
-    owner_id INT REFERENCES users (id)
+    owner_id INT REFERENCES users (id),
     file_id INT REFERENCES files(id)
 );
 

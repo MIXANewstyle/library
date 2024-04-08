@@ -1,6 +1,11 @@
 package lab.library.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -10,12 +15,24 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @NotEmpty(message = "Добавьте название книги")
     private String title;
+
+    @NotEmpty(message = "Добавьте автора книги")
     private String author;
+
+    @NotEmpty(message = "Добавьте описание книги")
     private String description;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Добавьте дату написания книги")
     @Column(name = "writing_date")
     private LocalDate writingDate;
+
+    @Min(value = 1, message = "Минимальное количество страниц 1")
     private int pages;
+
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User user;
@@ -27,13 +44,15 @@ public class Book {
     public Book() {
     }
 
-    public Book(String title, String author, String description, LocalDate writingDate, int pages, User user) {
+    public Book(int id, String title, String author, String description, LocalDate writingDate, int pages, User user,
+                File file) {
         this.title = title;
         this.author = author;
         this.description = description;
         this.writingDate = writingDate;
         this.pages = pages;
         this.user = user;
+        this.file = file;
     }
 
     public int getId() {
@@ -48,8 +67,8 @@ public class Book {
         return author;
     }
 
-    public String getDescription(){
-        return  description;
+    public String getDescription() {
+        return description;
     }
 
     public LocalDate getWritingDate() {
