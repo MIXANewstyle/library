@@ -34,7 +34,7 @@ public class ModeratorController {
             return "redirect:/moderator";
         } catch (Exception exception) {
             model.addAttribute("message", exception.getMessage());
-            return "moderator/errors/404";
+            return "errors/404";
         }
     }
 
@@ -43,7 +43,7 @@ public class ModeratorController {
         Optional<NewsDto> foundNews = newsService.getNewsById(id);
         if (foundNews.isEmpty()) {
             model.addAttribute("message", "Новость не найдена");
-            return "moderator/errors/404";
+            return "errors/404";
         }
         model.addAttribute("news", foundNews.get());
         return "moderator/news/one";
@@ -60,23 +60,24 @@ public class ModeratorController {
         Optional<News> foundNews = newsService.deleteNewsById(id);
         if (foundNews.isEmpty()) {
             model.addAttribute("message", "Новость не найдена");
-            return "moderator/errors/404";
+            return "errors/404";
         }
         return "redirect:/moderator";
     }
 
     @PostMapping("/update")
-    public String updateById(@Valid @ModelAttribute NewsDto news, Model model, @RequestParam MultipartFile multipartFile) {
+    public String updateById(@Valid @ModelAttribute NewsDto news, Model model,
+                             @RequestParam MultipartFile multipartFile) {
         try {
             Optional<News> foundNews = newsService.updateNewsById(news, news.getId(),
                     new FileDto(multipartFile.getOriginalFilename(), multipartFile.getBytes()));
             if (foundNews.isEmpty()) {
                 model.addAttribute("message", "Новость не найдена");
-                return "moderator/errors/404";
+                return "errors/404";
             }
         } catch (IOException e) {
             model.addAttribute("message", e.getMessage());
-            return "moderator/errors/404";
+            return "errors/404";
         }
         return "redirect:/moderator";
     }

@@ -29,7 +29,7 @@ public class AuthController {
         Optional<User> newUser = userService.createUser(user);
         if (newUser.isEmpty()) {
             model.addAttribute("message", "Пользователь с данным логином уже существует.");
-            return "auth/errors/404";
+            return "errors/404";
         }
         return "redirect:/login";
     }

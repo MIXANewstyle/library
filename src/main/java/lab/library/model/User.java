@@ -18,25 +18,34 @@ public class User {
     private String login;
 
     private String password;
-    @Column(name = "is_banned")
-    private boolean isBanned;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @OneToMany
-    @JoinColumn(name = "owner_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Book> books = new ArrayList<>();
 
-    public User(String name, String surname, String login, String password, boolean isBanned, Role role, List<Book> books) {
+    @OneToOne
+    @JoinColumn(name = "file_id")
+    private File file;
+
+    public User(String name, String surname, String login, String password, Role role) {
         this.name = name;
         this.surname = surname;
         this.login = login;
         this.password = password;
-        this.isBanned = isBanned;
+        this.role = role;
+    }
+
+    public User(String name, String surname, String login, String password, Role role, File file) {
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.password = password;
         this.role = role;
         this.books = books;
+        this.file = file;
     }
 
     public User() {
@@ -82,14 +91,6 @@ public class User {
         this.password = password;
     }
 
-    public boolean isBanned() {
-        return isBanned;
-    }
-
-    public void setBanned(boolean banned) {
-        isBanned = banned;
-    }
-
     public Role getRole() {
         return role;
     }
@@ -104,6 +105,14 @@ public class User {
 
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
     }
 
     @Override
@@ -127,9 +136,7 @@ public class User {
                 ", surname='" + surname + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", isBanned=" + isBanned +
                 ", role=" + role +
-                ", books=" + books +
                 '}';
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class NewsServiceImpl implements NewsService{
+public class NewsServiceImpl implements NewsService {
     private final NewsRepository newsRepository;
     private final FileService fileService;
     private final FileRepository fileRepository;
@@ -81,6 +81,5 @@ public class NewsServiceImpl implements NewsService{
         fileService.deleteById(oldFileId);
         return Optional.of(save);
     }
-
 
 }

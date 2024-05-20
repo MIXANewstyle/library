@@ -1,7 +1,9 @@
 package lab.library.service;
-import lab.library.model.Book;
+
 import lab.library.model.Role;
 import lab.library.model.User;
+import lab.library.model.dto.FileDto;
+import lab.library.model.dto.UserDto;
 
 import java.util.Optional;
 
@@ -10,7 +12,7 @@ public interface UserService {
 
     Optional<User> deleteUserById(int id);
 
-    Optional<User> editUserById(User user);
+    Optional<User> editUserById(UserDto userDto, int userId, FileDto fileDto);
 
     Optional<Role> getUserRoleById(int id);
 
@@ -18,7 +20,7 @@ public interface UserService {
 
     Optional<User> findUserByLogin(String login);
 
-    Optional<User> banUserById(int id);
+    Optional<UserDto> getUserDtoByLogin(String login);
 
-    void addBook(Book book, int userId);
+    Boolean existsByLogin(String login);
 }

@@ -1,10 +1,13 @@
 package lab.library.service;
 
+import lab.library.exceptions.BookNotFoundException;
+import lab.library.exceptions.UserNotFoundException;
 import lab.library.model.Book;
 import lab.library.model.File;
 import lab.library.model.User;
 import lab.library.model.dto.BookDto;
 import lab.library.model.dto.FileDto;
+import lab.library.model.dto.ShortBookDto;
 import lab.library.repository.BookRepository;
 import lab.library.repository.FileRepository;
 import org.springframework.stereotype.Service;
@@ -105,33 +108,32 @@ public class BookServiceImpl implements BookService {
                 .toList();
     }
 
-    @Override
-    @Transactional
-    public Optional<BookDto> putBookById(int bookId, int userId) {
-        Optional<Book> foundBook = bookRepository.findById(bookId);
-        Optional<User> foundUser = userService.findUserById(userId);
-        if (foundBook.isEmpty() || foundUser.isEmpty() || !foundUser.get().getBooks().contains(foundBook.get())) {
-            return Optional.empty();
-        }
-        Book currentBook = foundBook.get();
-        currentBook.setUser(null);
-        User currentUser = foundUser.get();
-        currentUser.getBooks().remove(currentBook);
-        return Optional.of(bookToBookDto(currentBook));
+    public List<ShortBookDto> getBooksByUserId(Integer userId) {
+        List<Book> books = bookRepository.findAllByUserId(userId);
+        return books.stream().map(book -> new ShortBookDto(book.getId(), book.getTitle(), book.getAuthor())).toList();
     }
 
     @Override
     @Transactional
-    public Optional<BookDto> takeBookById(int bookId, int userId) {
-        Optional<Book> optionalBook = bookRepository.findById(bookId);
-        Optional<User> optionalUser = userService.findUserById(userId);
-        if (optionalBook.isEmpty() || optionalUser.isEmpty()) {
-            return Optional.empty();
-        }
-        Book book = optionalBook.get();
-        User user = optionalUser.get();
+    public Optional<BookDto> putBookById(int bookId, int userId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new BookNotFoundException("Данной книги не существует"));
+        User user = userService.findUserById(userId)
+                .orElseThrow(() -> new UserNotFoundException("Пользователя не существует"));
+        book.setUser(null);
+        user.getBooks().remove(book);
+        return Optional.of(bookToBookDto(book));
+    }
+
+    @Override
+    @Transactional
+    public Optional<BookDto> takeBookById(int bookId, String login) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new BookNotFoundException("Данной книги не существует"));
+        User user = userService.findUserByLogin(login)
+                .orElseThrow(() -> new UserNotFoundException("Пользователя не существует"));
         book.setUser(user);
-        userService.addBook(book, userId);
+        user.getBooks().add(book);
         return Optional.of(bookToBookDto(book));
     }
 

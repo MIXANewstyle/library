@@ -3,6 +3,7 @@ package lab.library.service;
 import lab.library.model.Book;
 import lab.library.model.dto.BookDto;
 import lab.library.model.dto.FileDto;
+import lab.library.model.dto.ShortBookDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,9 +26,10 @@ public interface BookService {
 
     List<BookDto> getBooksByAuthor(String author);
 
-    Optional<BookDto> takeBookById(int bookId, int userId);
+    List<ShortBookDto> getBooksByUserId(Integer userId);
+
+    Optional<BookDto> takeBookById(int bookId, String login);
 
     Optional<BookDto> putBookById(int bookId, int userId);
-
 
 }

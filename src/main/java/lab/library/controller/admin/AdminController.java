@@ -41,7 +41,7 @@ public class AdminController {
             return "redirect:/admin";
         } catch (Exception exception) {
             model.addAttribute("message", exception.getMessage());
-            return "admin/errors/404";
+            return "errors/404";
         }
     }
 
@@ -50,7 +50,7 @@ public class AdminController {
         Optional<BookDto> foundBook = bookService.getBookById(id);
         if (foundBook.isEmpty()) {
             model.addAttribute("message", "Книга не найдена");
-            return "admin/errors/404";
+            return "errors/404";
         }
         model.addAttribute("book", foundBook.get());
         return "admin/book/one";
@@ -67,7 +67,7 @@ public class AdminController {
         Optional<Book> foundBook = bookService.deleteBookById(id);
         if (foundBook.isEmpty()) {
             model.addAttribute("message", "Книга не найдена");
-            return "admin/errors/404";
+            return "errors/404";
         }
         return "redirect:/admin";
     }
@@ -79,11 +79,11 @@ public class AdminController {
                     new FileDto(multipartFile.getOriginalFilename(), multipartFile.getBytes()));
             if (foundBook.isEmpty()) {
                 model.addAttribute("message", "Книга не найдена");
-                return "admin/errors/404";
+                return "errors/404";
             }
         } catch (IOException e) {
             model.addAttribute("message", e.getMessage());
-            return "admin/errors/404";
+            return "errors/404";
         }
         return "redirect:/admin";
     }

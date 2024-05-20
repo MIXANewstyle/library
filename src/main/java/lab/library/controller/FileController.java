@@ -20,9 +20,9 @@ public class FileController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable int id){
+    public ResponseEntity<?> getById(@PathVariable int id) {
         Optional<FileDto> fileDto = fileService.getFileById(id);
-        if (fileDto.isEmpty()){
+        if (fileDto.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(fileDto.get().getContent());
